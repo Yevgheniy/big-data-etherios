@@ -1,5 +1,4 @@
 from devicecloud import DeviceCloud
-import pprint
 
 
 class DataStreamConnect():
@@ -66,6 +65,7 @@ class DataStreamConnect():
             print "You are not connected"
 
     def get_streams(self):
+        # we are retrieving list of streams in device cloud for our credential
         if self.is_connect():
             print "List of streams:"
             for stream in self.dc.streams.get_streams():
@@ -74,15 +74,62 @@ class DataStreamConnect():
             print "You are not connected"
 
     def set_stream(self, stream_id):
-
-        if self.dc.streams.get_stream_if_exists(stream_id)
-        pass
+        # we 're trying to set stream, if not correct we send about it
+        if self.dc.streams.get_stream_if_exists(stream_id):
+            self.current_stream = stream_id
+            print "Set current stream: %s" % (stream_id)
+        else:
+            print "There not stream with such stream_id: %s" % (stream_id)
 
     def get_stream(self):
-        pass
+        # get username information about current connection
+        return self.current_stream
+
+    def get_stream_metadata(self, use_cached=True):
+        # get metadata about current stream
+        if self.current_stream is not None:
+            return self.dc.streams.get_stream(self.current_stream)._get_stream_metadata(use_cached)
+
+    def get_data_type(self, use_cached=True):
+        #  get information about dataType of current stream
+        dtype = self.get_stream_metadata(use_cached).get("dataType")
+        if dtype is not None:
+            dtype = dtype.upper()
+        return dtype
+
+    def get_units(self, use_cached=True):
+        # get information about units of current stream
+        return self.get_stream_metadata(use_cached).get("units")
+
+    def get_description(self, use_cached=True):
+        # get information about units of current stream
+        return self.get_stream_metadata(use_cached).get("description")
+
+    def get_data_ttl(self, use_cached=True):
+        # get information about time-to-live of current stream
+        data_ttl_text = self.get_stream_metadata(use_cached).get("dataTtl")
+        return int(data_ttl_text)
+
+    def get_rollup_ttl(self, use_cached=True):
+        # get information about time-to-live roll-up aggregate data in the stream
+        rollup_ttl_text = self.get_stream_metadata(use_cached).get("rollupTtl")
+        return int(rollup_ttl_text)
+
+    def get_current_value(self, use_cached=False):
+        # get last written data point for current stream
+        from devicecloud.streams import DataPoint
+        current_value = self.get_stream_metadata(use_cached).get("currentValue")
+        if current_value:
+            return DataPoint.from_json(self.dc.streams.get_stream(self.current_stream), current_value)
+        else:
+            return None
 
     def get_datapoints(self):
-        pass
+        # we are retrieving list of streams in device cloud for our credential
+        if self.current_stream is not None:
+            raw_data_from_devicecloud = list(self.dc.streams.get_stream(self.current_stream).read())
+            for datapoint in raw_data_from_devicecloud:
+                print datapoint
 
 # create instance of our class and retrive initial info
 dsc = DataStreamConnect()
@@ -112,4 +159,26 @@ dsc.get_devices()
 print
 # retrieving information about existing streams in device cloud for our credential:
 dsc.get_streams()
+# trying to set incorrect stream
+dsc.set_stream("classroom1")
+# trying to set correct stream
+dsc.set_stream("classroom")
 print
+print "Data type of the stream: ", dsc.get_data_type()
+print "Units of the stream: ",dsc.get_units()
+print "Description of the stream: ", dsc.get_description()
+print "Data TTL of the stream", dsc.get_data_ttl()
+print "Rollup TTL of the stream", dsc.get_rollup_ttl()
+print "Last written data point in the stream: ", dsc.get_current_value()
+print
+dsc.get_datapoints()
+dsc.set_stream("00000000-00000000-00409DFF-FF521DB2/freeMemory")
+print
+print "Data type of the stream: ", dsc.get_data_type()
+print "Units of the stream: ",dsc.get_units()
+print "Description of the stream: ", dsc.get_description()
+print "Data TTL of the stream", dsc.get_data_ttl()
+print "Rollup TTL of the stream", dsc.get_rollup_ttl()
+print "Last written data point in the stream: ", dsc.get_current_value()
+print
+dsc.get_datapoints()
