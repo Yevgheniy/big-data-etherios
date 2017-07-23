@@ -2,7 +2,7 @@ from devicecloud import DeviceCloud
 import pprint
 
 # The following lines require manual changes
-username = "nanri-test" # enter your username
+username = "11nanri-test" # enter your username
 password = "!Nanri0118" # enter your password
 
 
