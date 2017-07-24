@@ -167,3 +167,5 @@ class POJO_holding:
         """
         self._units = validate_type(unit, type(None), *six.string_types)
 
+
+
