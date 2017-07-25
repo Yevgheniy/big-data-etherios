@@ -1,9 +1,35 @@
 import DataStreamConnect
 import six
 from devicecloud.util import to_none_or_dt, validate_type
+import json
+
+STREAM_TYPE_INTEGER = "INTEGER"
+STREAM_TYPE_LONG = "LONG"
+STREAM_TYPE_FLOAT = "FLOAT"
+STREAM_TYPE_DOUBLE = "DOUBLE"
+STREAM_TYPE_STRING = "STRING"
+STREAM_TYPE_BINARY = "BINARY"
+STREAM_TYPE_JSON = "JSON"
+STREAM_TYPE_UNKNOWN = "UNKNOWN"
+
+# Mapping in the following form:
+# <dc-type> -> (<dc-to-python-fn>, <python-to-dc-fn>)
+DSTREAM_TYPE_MAP = {
+    STREAM_TYPE_INTEGER: (int, str),
+    STREAM_TYPE_LONG: (int, str),
+    STREAM_TYPE_FLOAT: (float, str),
+    STREAM_TYPE_DOUBLE: (float, str),
+    STREAM_TYPE_STRING: (str, str),
+    STREAM_TYPE_BINARY: (str, str),
+    STREAM_TYPE_UNKNOWN: (str, str),
+    STREAM_TYPE_JSON: (json.loads, json.dumps)
+}
+
 
 class POJO_holding:
-    """Our own class, which get and store information from DeviceCloud stream"""
+    """Our own class, which get and store information from DeviceCloud stream
+    a lot of code I've copypasted from devicecloud code.
+    """
 
 
     def __init__(self, data, stream_id=None, description=None, timestamp=None,

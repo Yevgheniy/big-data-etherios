@@ -28,6 +28,15 @@ print "== All our streams =="
 for stream in dc.streams.get_streams():
     print "%s " % (stream.get_stream_id())
     print
+    raw_data_from_devicecloud = stream.read(newest_first=False)
+    print type(raw_data_from_devicecloud)
+    for i, stream_ in enumerate(stream.read()):
+        print ("data point {}, {!r}".format(i + 1, stream_))
+    print "For stream %s below list of data points:" % (stream.get_stream_id())
+    for datapoint in raw_data_from_devicecloud:
+
+        print datapoint
+    print
 
 # get the name and current value of all data streams having values
 # with a floating point type
