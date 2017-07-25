@@ -12,6 +12,7 @@ class DataStreamConnect():
         self._cached_data = None
         self.current_user = None
         self.current_device = None
+        self.current_stream_id = None
         self.current_stream = None
         self.current_datapoint = None
 
@@ -76,10 +77,10 @@ class DataStreamConnect():
     def set_stream(self, stream_id):
         # we 're trying to set stream, if not correct we send about it
         if self.dc.streams.get_stream_if_exists(stream_id):
-            self.current_stream = stream_id
+            self.current_stream_id = stream_id
             print "Set current stream: %s" % (stream_id)
         else:
-            print "There not stream with such stream_id: %s" % (stream_id)
+            print "There is not stream with such stream_id: %s" % (stream_id)
 
     def get_stream(self):
         # get username information about current connection
@@ -131,7 +132,7 @@ class DataStreamConnect():
             for datapoint in raw_data_from_devicecloud:
                 print datapoint
 
-# create instance of our class and retrive initial info
+# create instance of our class and retrieve initial info
 dsc = DataStreamConnect()
 print "We are connecting? - ", dsc.is_connect()
 print "What is username credential of current connection? - ", dsc.get_username()
