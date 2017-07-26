@@ -1,5 +1,6 @@
 import DataStreamConnect
 import six
+import json
 from devicecloud.util import to_none_or_dt, validate_type
 
 
@@ -211,7 +212,7 @@ dsc.get_streams()
 dsc.set_stream("classroom")
 print
 # get information in data points and set it to our class
-raw_data_from_devicecloud = list(self.dc.streams.get_stream(self.current_stream).read())
+raw_data_from_devicecloud = list(dsc.get_stream.read())
             for datapoint in raw_data_from_devicecloud:
                 print datapoint
 

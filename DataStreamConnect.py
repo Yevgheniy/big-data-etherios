@@ -95,7 +95,7 @@ class DataStreamConnect():
     def get_stream_metadata(self, use_cached=True):
         # get metadata about current stream
         if self.current_stream is not None:
-            return self.dc.streams.get_stream(self.current_stream)._get_stream_metadata(use_cached)
+            return self.current_stream._get_stream_metadata(use_cached)
 
     def get_data_type(self, use_cached=True):
         #  get information about dataType of current stream
@@ -127,14 +127,14 @@ class DataStreamConnect():
         from devicecloud.streams import DataPoint
         current_value = self.get_stream_metadata(use_cached).get("currentValue")
         if current_value:
-            return DataPoint.from_json(self.dc.streams.get_stream(self.current_stream), current_value)
+            return DataPoint.from_json(self.current_stream, current_value)
         else:
             return None
 
     def get_datapoints(self):
         # we are retrieving list of streams in device cloud for our credential
         if self.current_stream is not None:
-            raw_data_from_devicecloud = list(self.dc.streams.get_stream(self.current_stream).read())
+            raw_data_from_devicecloud = list(self.current_stream.read())
             for datapoint in raw_data_from_devicecloud:
                 print datapoint
 
