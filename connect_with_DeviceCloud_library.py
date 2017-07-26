@@ -1,7 +1,8 @@
 from devicecloud import DeviceCloud
+import pprint
 
 # The following lines require manual changes
-username = "nanri-test" # enter your username
+username = "11nanri-test" # enter your username
 password = "!Nanri0118" # enter your password
 
 
@@ -27,6 +28,9 @@ print
 print "== All our streams =="
 for stream in dc.streams.get_streams():
     print "%s " % (stream.get_stream_id())
+    raw_data_from_devicecloud = list(stream.read())
+    print 'This stream contains {} datapoints'.format(len(raw_data_from_devicecloud))
+    pprint.pprint(raw_data_from_devicecloud)
     print
     raw_data_from_devicecloud = stream.read(newest_first=False)
     print type(raw_data_from_devicecloud)
@@ -46,4 +50,7 @@ print "== Our digit streams =="
 for stream in dc.streams.get_streams():
     if stream.get_data_type().lower() in ('float', 'double'):
         print "%s -> %s" % (stream.get_stream_id(), stream.get_current_value())
-        print
+        raw_data_from_devicecloud = list(stream.read())
+        # for dc in raw_data_from_device cloud:
+        print("Read {} data points.".format(len(raw_data_from_devicecloud)))
+    print
