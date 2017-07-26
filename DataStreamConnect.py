@@ -76,14 +76,20 @@ class DataStreamConnect():
 
     def set_stream(self, stream_id):
         # we 're trying to set stream, if not correct we send about it
-        if self.dc.streams.get_stream_if_exists(stream_id):
+        _get_stream = self.dc.streams.get_stream_if_exists(stream_id)
+        if _get_stream is not None:
             self.current_stream_id = stream_id
-            print "Set current stream: %s" % (stream_id)
+            self.current_stream = _get_stream
+            print "Set current stream: %s" % stream_id
         else:
-            print "There is not stream with such stream_id: %s" % (stream_id)
+            print "There is not stream with such stream_id: %s" % stream_id
+
+    def get_stream_id(self):
+        # get id from current stream
+        return self.current_stream_id
 
     def get_stream(self):
-        # get username information about current connection
+        # get dc object datastream
         return self.current_stream
 
     def get_stream_metadata(self, use_cached=True):
