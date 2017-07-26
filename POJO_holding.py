@@ -28,7 +28,7 @@ DSTREAM_TYPE_MAP = {
 
 class POJO_holding:
     """Our own class, which get and store information from DeviceCloud stream"""
-    def __init__(self, data, stream_id=None, description=None, timestamp=None,
+    def __init__(self, data=None, stream_id=None, description=None, timestamp=None,
                  quality=None, location=None, data_type=None, units=None, dp_id=None,
                  customer_id=None, server_timestamp=None):
         self._stream_id = None  # invariant: always string or None
@@ -48,6 +48,10 @@ class POJO_holding:
         This ID only for existing data points, so we cant create(set) ourself this ID.
         """
         return self._dp_id
+
+    def set_id(self, dp_id):
+        """It's only for existing data points"""
+        self._dp_id = dp_id
 
     def get_data(self):
         """Get the actual data value associated with this data point"""
@@ -96,6 +100,11 @@ class POJO_holding:
     def get_server_timestamp(self):
         """Get the date and time at which the server received this data point"""
         return self._server_timestamp
+
+    def set_server_timestamp(self, server_timestamp):
+        """set server timestamp from DataPoint object"""
+        self._server_timestamp = to_none_or_dt(server_timestamp)
+
 
     def get_quality(self):
         """Get the quality as an integer
@@ -209,6 +218,27 @@ if __name__ == "__main__":
     print
     # get information in data points and set it to our class
     raw_data_from_devicecloud = list(dsc.get_stream().read())
+    list_POJO = list()
     for datapoint in raw_data_from_devicecloud:
-        print datapoint
+        # first we create new empty instance of pojo class
+        pj = POJO_holding()
+        #  and now set data to it
+        pj.set_id(datapoint.get_id())
+        pj.set_data(datapoint.get_data())
+        pj.set_data_type(datapoint.get_data_type())
+        pj.set_description(datapoint.get_description())
+        pj.set_location(datapoint.get_location())
+        pj.set_quality(datapoint.get_quality())
+        pj.set_stream_id(dsc.get_stream_id())
+        pj.set_timestamp(datapoint.get_timestamp())
+        pj.set_server_timestamp(datapoint.get_server_timestamp())
+        pj.set_units(datapoint.get_units())
+        list_POJO.append(pj)
+
+#  so, we store information from datapoints in list of POJO_holding class
+#  and can to manipulate with this data
+    for pojo in list_POJO:
+        print pojo.get_id()
+        print pojo.get_data()
+
 
