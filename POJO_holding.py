@@ -1,9 +1,9 @@
-import DataStreamConnect
+from DataStreamConnect import DataStreamConnect
 import six
 import json
 from devicecloud.util import to_none_or_dt, validate_type
 
-
+#  a lot of code I copypasted from DeviceCloud
 STREAM_TYPE_INTEGER = "INTEGER"
 STREAM_TYPE_LONG = "LONG"
 STREAM_TYPE_FLOAT = "FLOAT"
@@ -28,8 +28,6 @@ DSTREAM_TYPE_MAP = {
 
 class POJO_holding:
     """Our own class, which get and store information from DeviceCloud stream"""
-
-
     def __init__(self, data, stream_id=None, description=None, timestamp=None,
                  quality=None, location=None, data_type=None, units=None, dp_id=None,
                  customer_id=None, server_timestamp=None):
@@ -44,7 +42,6 @@ class POJO_holding:
         self._dp_id = None  # invariant: always string or None
         self._customer_id = None  # invariant: always string or None
         self._server_timestamp = None  # invariant: always None or datetime
-
 
     def get_id(self):
         """Get the ID of this data point if available
@@ -191,28 +188,27 @@ class POJO_holding:
         """
         self._units = validate_type(unit, type(None), *six.string_types)
 
-
-# in this example we 'll connect to Device Cloud, set defined stream and set information from data point
-#  to instances of new class. after this we 'll get information from instances
-
-dsc = DataStreamConnect()
-# trying to connect to device cloud with our right credentials
-username = "nanri-test" # enter your username
-password = "!Nanri0118" # enter your password
-dsc.connect(username,password)
-# retrieving information about connection
-print "We are connecting? - ", dsc.is_connect()
-print "What is username credential of current connection? - ", dsc.get_username()
-# retrieving information about devices in device cloud for our credential:
-dsc.get_devices()
-print
-# retrieving information about existing streams in device cloud for our credential:
-dsc.get_streams()
-# trying to set correct stream
-dsc.set_stream("classroom")
-print
-# get information in data points and set it to our class
-raw_data_from_devicecloud = list(dsc.get_stream.read())
-            for datapoint in raw_data_from_devicecloud:
-                print datapoint
+if __name__ == "__main__":
+    # in this example we 'll connect to Device Cloud, set defined stream and set information from data point
+    #  to instances of new class. after this we 'll get information from instances
+    dsc = DataStreamConnect()
+    # trying to connect to device cloud with our right credentials
+    username = "nanri-test" # enter your username
+    password = "!Nanri0118" # enter your password
+    dsc.connect(username,password)
+    # retrieving information about connection
+    print "We are connecting? - ", dsc.is_connect()
+    print "What is username credential of current connection? - ", dsc.get_username()
+    # retrieving information about devices in device cloud for our credential:
+    dsc.get_devices()
+    print
+    # retrieving information about existing streams in device cloud for our credential:
+    dsc.get_streams()
+    # trying to set correct stream
+    dsc.set_stream("classroom")
+    print
+    # get information in data points and set it to our class
+    raw_data_from_devicecloud = list(dsc.get_stream().read())
+    for datapoint in raw_data_from_devicecloud:
+        print datapoint
 

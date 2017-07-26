@@ -138,54 +138,55 @@ class DataStreamConnect():
             for datapoint in raw_data_from_devicecloud:
                 print datapoint
 
-# create instance of our class and retrieve initial info
-dsc = DataStreamConnect()
-print "We are connecting? - ", dsc.is_connect()
-print "What is username credential of current connection? - ", dsc.get_username()
-print
+if __name__ == "__main__":
+    # create instance of our class and retrieve initial info
+    dsc = DataStreamConnect()
+    print "We are connecting? - ", dsc.is_connect()
+    print "What is username credential of current connection? - ", dsc.get_username()
+    print
 
-# trying to connect to device cloud with wrong credentials
-username = "11nanri-test" # enter your username
-password = "!Nanri0118" # enter your password
-dsc.connect(username,password)
-# retrieving information about connection
-print "We are connecting? - ", dsc.is_connect()
-print "What is username credential of current connection? - ", dsc.get_username()
-dsc.get_devices()
-print
+    # trying to connect to device cloud with wrong credentials
+    username = "11nanri-test" # enter your username
+    password = "!Nanri0118" # enter your password
+    dsc.connect(username,password)
+    # retrieving information about connection
+    print "We are connecting? - ", dsc.is_connect()
+    print "What is username credential of current connection? - ", dsc.get_username()
+    dsc.get_devices()
+    print
 
-# trying to connect to device cloud with our right credentials
-username = "nanri-test" # enter your username
-password = "!Nanri0118" # enter your password
-dsc.connect(username,password)
-# retrieving information about connection
-print "We are connecting? - ", dsc.is_connect()
-print "What is username credential of current connection? - ", dsc.get_username()
-# retrieving information about devices in device cloud for our credential:
-dsc.get_devices()
-print
-# retrieving information about existing streams in device cloud for our credential:
-dsc.get_streams()
-# trying to set incorrect stream
-dsc.set_stream("classroom1")
-# trying to set correct stream
-dsc.set_stream("classroom")
-print
-print "Data type of the stream: ", dsc.get_data_type()
-print "Units of the stream: ",dsc.get_units()
-print "Description of the stream: ", dsc.get_description()
-print "Data TTL of the stream", dsc.get_data_ttl()
-print "Rollup TTL of the stream", dsc.get_rollup_ttl()
-print "Last written data point in the stream: ", dsc.get_current_value()
-print
-dsc.get_datapoints()
-dsc.set_stream("00000000-00000000-00409DFF-FF521DB2/freeMemory")
-print
-print "Data type of the stream: ", dsc.get_data_type()
-print "Units of the stream: ",dsc.get_units()
-print "Description of the stream: ", dsc.get_description()
-print "Data TTL of the stream", dsc.get_data_ttl()
-print "Rollup TTL of the stream", dsc.get_rollup_ttl()
-print "Last written data point in the stream: ", dsc.get_current_value()
-print
-dsc.get_datapoints()
+    # trying to connect to device cloud with our right credentials
+    username = "nanri-test" # enter your username
+    password = "!Nanri0118" # enter your password
+    dsc.connect(username,password)
+    # retrieving information about connection
+    print "We are connecting? - ", dsc.is_connect()
+    print "What is username credential of current connection? - ", dsc.get_username()
+    # retrieving information about devices in device cloud for our credential:
+    dsc.get_devices()
+    print
+    # retrieving information about existing streams in device cloud for our credential:
+    dsc.get_streams()
+    # trying to set incorrect stream
+    dsc.set_stream("classroom1")
+    # trying to set correct stream
+    dsc.set_stream("classroom")
+    print
+    print "Data type of the stream: ", dsc.get_data_type()
+    print "Units of the stream: ",dsc.get_units()
+    print "Description of the stream: ", dsc.get_description()
+    print "Data TTL of the stream", dsc.get_data_ttl()
+    print "Rollup TTL of the stream", dsc.get_rollup_ttl()
+    print "Last written data point in the stream: ", dsc.get_current_value()
+    print
+    dsc.get_datapoints()
+    dsc.set_stream("00000000-00000000-00409DFF-FF521DB2/freeMemory")
+    print
+    print "Data type of the stream: ", dsc.get_data_type()
+    print "Units of the stream: ",dsc.get_units()
+    print "Description of the stream: ", dsc.get_description()
+    print "Data TTL of the stream", dsc.get_data_ttl()
+    print "Rollup TTL of the stream", dsc.get_rollup_ttl()
+    print "Last written data point in the stream: ", dsc.get_current_value()
+    print
+    dsc.get_datapoints()
