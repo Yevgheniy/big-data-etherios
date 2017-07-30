@@ -27,7 +27,7 @@ def write_stream_and_points(dc):
         test_stream.write(DataPoint(
             data = round(random.uniform(20,30),2),
             description="this data points used for testing",
-            # location - Kharkiv
+            # location - Kharkov
             location=(49.980556,36.252500,113)
         ))
         time.sleep(2)
@@ -35,9 +35,9 @@ def write_stream_and_points(dc):
     points = list(test_stream.read(newest_first=False))
     print("Read {} data points".format(len(points)))
 
+if __name__ == "__main__":
+    username = "nanri-test" # our username
+    password = "!Nanri0118" # our password
 
-username = "nanri-test" # our username
-password = "!Nanri0118" # our password
-
-dc = DeviceCloud(username, password)
-write_stream_and_points(dc)
+    dc = DeviceCloud(username, password)
+    write_stream_and_points(dc)
