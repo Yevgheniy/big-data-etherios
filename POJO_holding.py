@@ -240,5 +240,3 @@ if __name__ == "__main__":
     for pojo in list_POJO:
         print pojo.get_id()
         print pojo.get_data()
-
-
