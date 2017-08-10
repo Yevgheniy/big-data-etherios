@@ -2,7 +2,7 @@ from devicecloud import DeviceCloud
 import pprint
 
 # The following lines require manual changes
-username = "11nanri-test" # enter your username
+username = "nanri-test" # enter your username
 password = "!Nanri0118" # enter your password
 
 
@@ -11,10 +11,10 @@ dc = DeviceCloud(username, password)
 # show the MAC address of all devices that are currently connected
 #
 # This is done using the device cloud DeviceCore functionality
-# print "== Connected Devices =="
-# for device in dc.devicecore.get_devices():
-#     if device.is_connected():
-#         print device.get_mac()
+print "== Connected Devices =="
+for device in dc.devicecore.get_devices():
+    if device.is_connected():
+        print device.get_mac()
 
 print "== All our Devices =="
 for device in dc.devicecore.get_devices():
