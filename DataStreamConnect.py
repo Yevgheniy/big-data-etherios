@@ -1,7 +1,7 @@
 from devicecloud import DeviceCloud
 
 
-class DataStreamConnect():
+class DataStreamConnect:
     """Our own class to connect and retrieve data from device cloud
     we 're using devicecloud package
     """
@@ -34,12 +34,12 @@ class DataStreamConnect():
         #     ))
         pass
 
-    def connect(self,username, password):
+    def connect(self, username, password):
         # first we need to connect to device cloud
         # if we "re connected first drop connect and try to connect again
         if self.connect:
             self.dc = None
-        self.dc = DeviceCloud(username,password)
+        self.dc = DeviceCloud(username, password)
         if self.dc.has_valid_credentials():
             self.current_user = username
             self.connection = True
@@ -138,6 +138,7 @@ class DataStreamConnect():
             for datapoint in raw_data_from_devicecloud:
                 print datapoint
 
+
 if __name__ == "__main__":
     # create instance of our class and retrieve initial info
     dsc = DataStreamConnect()
@@ -146,9 +147,9 @@ if __name__ == "__main__":
     print
 
     # trying to connect to device cloud with wrong credentials
-    username = "11nanri-test" # enter your username
-    password = "!Nanri0118" # enter your password
-    dsc.connect(username,password)
+    username = "11nanri-test"  # enter your username
+    password = "!Nanri0118"  # enter your password
+    dsc.connect(username, password)
     # retrieving information about connection
     print "We are connecting? - ", dsc.is_connect()
     print "What is username credential of current connection? - ", dsc.get_username()
@@ -156,9 +157,9 @@ if __name__ == "__main__":
     print
 
     # trying to connect to device cloud with our right credentials
-    username = "nanri-test" # enter your username
-    password = "!Nanri0118" # enter your password
-    dsc.connect(username,password)
+    username = "nanri-test"  # enter your username
+    password = "!Nanri0118"  # enter your password
+    dsc.connect(username, password)
     # retrieving information about connection
     print "We are connecting? - ", dsc.is_connect()
     print "What is username credential of current connection? - ", dsc.get_username()
@@ -172,8 +173,9 @@ if __name__ == "__main__":
     # trying to set correct stream
     dsc.set_stream("classroom")
     print
+    print "Stream ID", dsc.get_stream_id()
     print "Data type of the stream: ", dsc.get_data_type()
-    print "Units of the stream: ",dsc.get_units()
+    print "Units of the stream: ", dsc.get_units()
     print "Description of the stream: ", dsc.get_description()
     print "Data TTL of the stream", dsc.get_data_ttl()
     print "Rollup TTL of the stream", dsc.get_rollup_ttl()
@@ -183,7 +185,7 @@ if __name__ == "__main__":
     dsc.set_stream("00000000-00000000-00409DFF-FF521DB2/freeMemory")
     print
     print "Data type of the stream: ", dsc.get_data_type()
-    print "Units of the stream: ",dsc.get_units()
+    print "Units of the stream: ", dsc.get_units()
     print "Description of the stream: ", dsc.get_description()
     print "Data TTL of the stream", dsc.get_data_ttl()
     print "Rollup TTL of the stream", dsc.get_rollup_ttl()
