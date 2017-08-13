@@ -1,0 +1,4 @@
+﻿Field 'data_types' in the table 'streams' has defined quantity of values, so I've defined this field as ENUM for less volume
+Also I've defined fields 'IP_address' and 'Global_address' as INT UNSIGNED for less volume (than VARCHAR). WE can convert values in these fields to IP address by some commands ( INET_NTOA()).
+'customer_id' field I've removed from 'data_points' table to 'devices' table for less volume of 'data_points' table.
+This schema for MySQL RDBMS. If we 'll be planning schema for PostgreSQL we can change types for 'mac_address', 'IP_address', 'Global_address' fields to special types in PostgreSQL.
